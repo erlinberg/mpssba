@@ -1,0 +1,34 @@
+# Python cache/artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.dylib
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+
+# Test and tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS/editor
+.DS_Store
+.vscode
+
+# Data outputs
+results/
+
+# Config
+config.json
+
+TODO.md

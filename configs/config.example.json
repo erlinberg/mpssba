@@ -1,0 +1,30 @@
+{
+    "model": {
+        "n_qubits": 12,
+        "bond_dim": 64
+    },
+    "training": {
+        "masking": {
+            "type": "corr_2body",
+            "value": 12
+        },
+        "epochs": 200,
+        "tolerance": 1e-17,
+        "record_every": 1
+    },
+    "dist": {
+        "method": "boltzmann",
+        "seed": 34321,
+        "kwargs": {
+            "target_entropy": 0.45
+        }
+    },
+    "init": {
+        "method": "rnd_full",
+        "kwargs": {}
+    },
+    "batch": {
+        "runs": 10,
+        "postfix": "_run{run_idx}"
+    }
+}

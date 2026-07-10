@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mpssba"
+version = "0.1.0"
+description = "MPS Pipeline for Fourier/SBA analysis"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Erol Develi" }]
+dependencies = [
+    "quimb",
+    "optax",
+    "jax",
+    "jax[cuda13]",
+    "jaxlib",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "qfso",
+    "scienceplots"
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mpssba*"]
