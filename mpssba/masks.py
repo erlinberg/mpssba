@@ -36,7 +36,14 @@ def build_boolean_mask(config: Config, n_qubits: int) -> tuple[np.ndarray, str]:
             for x in range(n_states)
         ])
         mask_name = f"CORR_2BODY_{corr}"
-        
+    elif mask_type == "corr_2body_lower":
+        corr = val
+        # Include correlation length 1 since single qubit terms need to be included for 2-body correlations
+        data_mask = np.array([
+            1.0 if ((calculate_correlation_length(x) >= corr or calculate_correlation_length(x) == 1) and x.bit_count() <= 2) else 0.0 
+            for x in range(n_states)
+        ])
+        mask_name = f"CORR_2BODY_LOWER_{corr}"
     else:
         raise ValueError(f"Unknown mask type: {mask_type}")
         

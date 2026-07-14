@@ -15,6 +15,7 @@ MASKING_TYPE_TO_LABEL = {
     "hamming": "Hamming Weight",
     "correlation": "Correlation Length",
     "corr_2body": "Correlation Length (2-body)",
+    "corr_2body_lower": "Correlation Length (2-body, lower bound)",
 }
 
 
