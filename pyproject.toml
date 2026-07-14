@@ -19,7 +19,8 @@ dependencies = [
     "numpy",
     "pandas",
     "qfso",
-    "scienceplots"
+    "scienceplots",
+    "textual"
 ]
 
 [tool.setuptools]

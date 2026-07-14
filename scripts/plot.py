@@ -10,12 +10,14 @@ from mpssba.visualization.plotters import (
     plot_covariance,
     plot_learning_time,
 )
+from mpssba.tui.plotter_tui import PlotterApp
+
 
 
 def main():
     parser = argparse.ArgumentParser(description="Unified Plotting for MPS Pipeline")
     parser.add_argument(
-        "--runs", nargs="+", required=True, help="List of run directories to plot"
+        "--runs", nargs="+", help="List of run directories to plot. If omitted, opens the TUI."
     )
     parser.add_argument(
         "--labels",
@@ -36,6 +38,16 @@ def main():
     )
 
     args = parser.parse_args()
+
+    if not args.runs:
+        app = PlotterApp()
+        result = app.run()
+        
+        if not result or not result.get("runs"):
+            raise ValueError("No runs selected in TUI.")
+            
+        args.runs = result["runs"]
+        args.plot_type = result.get("plot_type", "all")
 
     if args.labels and len(args.labels) != len(args.runs):
         raise ValueError("Number of labels must match number of runs.")

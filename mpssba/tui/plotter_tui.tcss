@@ -1,0 +1,28 @@
+#top_bar {
+    height: auto;
+    margin: 1 2;
+    align: left middle;
+}
+
+#search_input {
+    width: 2fr;
+    margin: 0 1 0 0;
+}
+
+#plot_type_select {
+    width: 1fr;
+    margin: 0 1 0 0;
+}
+
+#plot_button {
+    width: auto;
+    margin: 0;
+}
+
+SelectionList {
+    margin: 0 2 1 2;
+    border: round $primary;
+    height: 1fr;
+    background: $boost;
+    padding: 0 1;
+}
