@@ -61,13 +61,16 @@ def main():
     runs = [RunDataLoader(r) for r in args.runs]
     masking_types = set(r.config.training.masking.type for r in runs)
 
-    if len(masking_types) > 1:
-        raise ValueError(
-            "All runs must have the same masking type for combined plotting."
-        )
+    # FIXME: Currently the masks corr_2body and corr_2body_lower are treated as the same for plotting purposes
+    # since they are essentially the same mask but we still need to keep difference with hamming mask and any other mask in the future.
+    # Currently this is a hacky solution to rely on the user choosing right runs, but we should consider a more robust way to handle this in the future.
+
+    # if len(masking_types) > 1:
+    #     raise ValueError(
+    #         "All runs must have the same masking type for combined plotting."
+    #     )
 
     masking_type = masking_types.pop()
-
     
 
     if args.plot_type in ["masses", "all"]:

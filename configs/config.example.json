@@ -25,6 +25,8 @@
     },
     "batch": {
         "runs": 10,
-        "postfix": "_run{run_idx}"
+        "postfix": "_run{run_idx}",
+        "run_continue": false,
+        "previous_run_path": "results/runs/run1"
     }
 }

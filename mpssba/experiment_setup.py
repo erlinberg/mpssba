@@ -21,11 +21,12 @@ class ExperimentSetup:
 
     def build_initial_mps(self) -> qtn.MatrixProductState:
         """Returns a fresh MPS state based on the selected strategy."""
-        init_args = {}
+        init_args = {
+            "n_qubits": self.config.model.n_qubits,
+            "bond_dim": self.config.model.bond_dim,
+        }
         init_args.update(self.config.init.kwargs)
         return get_initial_mps(
             self.config.init.method,
-            self.config.model.n_qubits,
-            self.config.model.bond_dim,
             **init_args,
         )

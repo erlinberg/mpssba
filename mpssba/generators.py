@@ -1,6 +1,8 @@
 import quimb.tensor as qtn
 import numpy as np
 from jax import random
+import pickle
+import os
 from qfso.distributions.generate import generate_distribution_with_target_entropy
 
 def _generate_boltzmann_distribution(n_states: int, **kwargs) -> np.ndarray:
@@ -48,14 +50,25 @@ def _create_uniform_superposition_mps(n_qubits: int, bond_dim: int, **kwargs) ->
     
     return mps
 
+def _create_mps_from_pickle(file_path: str, **kwargs) -> qtn.MatrixProductState:
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"Pickle file {file_path} not found.")
+    
+    with open(file_path, "rb") as f:
+        # Load the last snapshot of the MPS from the pickle file
+        mps = pickle.load(f)["snapshots"][-1]
+
+    return mps
+
 MPS_INIT_REGISTRY = {
     "rnd_full": _create_random_entangled_mps,
     "rnd_fact": _create_random_factorized_mps,
     "uniform": _create_uniform_superposition_mps,
+    "from_pickle": _create_mps_from_pickle,
 }
 
-def get_initial_mps(method: str, n_qubits: int, bond_dim: int, **kwargs) -> qtn.MatrixProductState:
+def get_initial_mps(method: str, **kwargs) -> qtn.MatrixProductState:
     initializer = MPS_INIT_REGISTRY.get(method)
     if not initializer:
         raise ValueError(f"Unknown MPS initialization '{method}'. Available: {list(MPS_INIT_REGISTRY.keys())}")
-    return initializer(n_qubits, bond_dim, **kwargs)
+    return initializer(**kwargs)

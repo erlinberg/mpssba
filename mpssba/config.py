@@ -1,4 +1,3 @@
-import argparse
 import json
 import os
 from datetime import datetime
@@ -44,6 +43,8 @@ class InitConfig:
 class BatchConfig:
     runs: int = 10
     postfix: str = "_run{run_idx}"
+    run_continue: bool = False
+    previous_run_path: str = ""
 
 
 @dataclass
@@ -85,13 +86,6 @@ class Config:
         return asdict(self)
 
 
-def load_config_from_json(json_path):
-    if not os.path.exists(json_path):
-        raise FileNotFoundError(f"Config file {json_path} not found.")
-    with open(json_path, "r") as f:
-        return json.load(f)
-
-
 RUN_ID_FIELDS = [
     ("model.n_qubits", "nq"),
     ("model.bond_dim", "bd"),
@@ -128,9 +122,15 @@ def _generate_run_id(config: Config):
     return run_id
 
 
-def setup_experiment_dir(raw_dict):
-    config = Config.from_dict(raw_dict)
+def load_config_from_json(json_path: str) -> Config:
+    if not os.path.exists(json_path):
+        raise FileNotFoundError(f"Config file {json_path} not found.")
+    with open(json_path, "r") as f:
+        config = Config.from_dict(json.load(f))
+        return config
+    
 
+def setup_experiment_dir(config: Config) -> None:
     run_id = _generate_run_id(config)
     run_dir = os.path.join("results", "runs", run_id)
 
@@ -147,14 +147,3 @@ def setup_experiment_dir(raw_dict):
         json.dump(config.to_dict(), f, indent=4)
 
     return config
-
-
-def parse_train_args():
-    parser = argparse.ArgumentParser(description="MPS Pipeline")
-    parser.add_argument(
-        "--config", type=str, default="config.json", help="Path to config JSON"
-    )
-    args = parser.parse_args()
-
-    raw_dict = load_config_from_json(args.config)
-    return setup_experiment_dir(raw_dict)
