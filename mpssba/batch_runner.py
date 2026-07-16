@@ -69,7 +69,7 @@ class BatchRunner:
         self.config.batch.runs = prev_config.batch.runs
         self.config.batch.postfix = prev_config.batch.postfix
 
-        filenames = glob.glob(os.path.join(self.config.batch.original_run_path, "raw/mps_history_*.pkl"))
+        filenames = glob.glob(os.path.join(self.config.batch.previous_run_path, "raw/mps_history_*.pkl"))
 
         if len(filenames) != self.config.batch.runs:
             raise ValueError(

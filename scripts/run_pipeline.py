@@ -24,7 +24,7 @@ def main():
 
     batcher = BatchRunner(config)
 
-    if config.batch.continue_run:
+    if config.batch.run_continue:
         orig_config = load_config_from_json(os.path.join(config.batch.previous_run_path, "config.json"))
         batcher.execute_continued_runs(orig_config)
         return
